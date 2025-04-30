@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Notification, NotificationStats } from '../types/notification';
 import { fetchNotifications, retryNotification } from '../services/api';
+import { getNotifications } from '../services/notificationService';
 
 export const useNotifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -29,8 +30,8 @@ export const useNotifications = () => {
       setNotifications(data);
       
       // Calculate stats
-      const totalSent = data.filter(n => n.status === 'SENT').length;
-      const totalFailed = data.filter(n => n.status === 'FAILED').length;
+      const totalSent: number = data.filter((n: Notification) => n.status === 'SENT').length;
+      const totalFailed = data.filter((n: Notification) => n.status === 'FAILED').length;
       setStats({ totalSent, totalFailed });
       
     } catch (err) {
