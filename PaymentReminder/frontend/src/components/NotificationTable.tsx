@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { formatDistanceToNow } from '../utils/formatters';
 import StatusBadge from './ui/StatusBadge';
-import RetryButton from './ui/RetryButton';
-import RetryModal from './ui/RetryModal';
+import InfoButton from './ui/InfoButton'; // Replace RetryButton with InfoButton
+import InfoModal from './ui/InfoModal'; // Replace RetryModal with InfoModal
 import { Notification } from '../types/notification';
 
 interface NotificationTableProps {
@@ -14,20 +14,12 @@ const NotificationTable: React.FC<NotificationTableProps> = ({
   notifications,
   onRetry
 }) => {
-  const [retryModalOpen, setRetryModalOpen] = useState(false);
+  const [infoModalOpen, setInfoModalOpen] = useState(false); // Replace retryModalOpen with infoModalOpen
   const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
 
-  const handleRetryClick = (notification: Notification) => {
+  const handleInfoClick = (notification: Notification) => { // Replace handleRetryClick with handleInfoClick
     setSelectedNotification(notification);
-    setRetryModalOpen(true);
-  };
-
-  const handleRetryConfirm = async () => {
-    if (selectedNotification) {
-      setRetryModalOpen(false);
-      await onRetry(selectedNotification.id);
-      setSelectedNotification(null);
-    }
+    setInfoModalOpen(true);
   };
 
   return (
@@ -87,11 +79,9 @@ const NotificationTable: React.FC<NotificationTableProps> = ({
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {notification.status === 'FAILED' && (
-                    <RetryButton 
-                      onRetry={() => handleRetryClick(notification)}
-                    />
-                  )}
+                  <InfoButton 
+                    onInfo={() => handleInfoClick(notification)} // Replace RetryButton with InfoButton
+                  />
                 </td>
               </tr>
             ))}
@@ -100,12 +90,14 @@ const NotificationTable: React.FC<NotificationTableProps> = ({
       </div>
 
       {selectedNotification && (
-        <RetryModal
-          isOpen={retryModalOpen}
+        <InfoModal // Replace RetryModal with InfoModal
+          isOpen={infoModalOpen} // Replace retryModalOpen with infoModalOpen
           customerId={selectedNotification.customerId}
           phoneNumber={selectedNotification.phoneNumber}
-          onConfirm={handleRetryConfirm}
-          onCancel={() => setRetryModalOpen(false)}
+          messagePreview={selectedNotification.messagePreview} // Add messagePreview to modal
+          status={selectedNotification.status} // Add status to modal
+          timestamp={selectedNotification.timestamp} // Add timestamp to modal
+          onClose={() => setInfoModalOpen(false)} // Replace onCancel with onClose
         />
       )}
     </>
