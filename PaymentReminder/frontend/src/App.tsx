@@ -5,7 +5,7 @@ import Dashboard from './components/Dashboard';
 function App() {
   return (
     <div className="app-container">
-      <AuthPage />
+      {/* <AuthPage /> */}
       <Dashboard />;
     </div>
   );
