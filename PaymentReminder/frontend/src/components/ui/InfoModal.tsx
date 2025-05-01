@@ -58,7 +58,7 @@ const InfoModal: React.FC<InfoModalProps> = ({
       <div
         className={`bg-white rounded-lg shadow-lg p-6 w-full max-w-lg transform transition-transform duration-300 ${
           isAnimating ? 'scale-100' : 'scale-95'
-        }`}
+        } hover:scale-105 hover:shadow-xl`}
       >
         <h2 className="text-lg font-bold mb-4 text-center text-gray-800">Message Conversation</h2>
         <div className="flex flex-col space-y-4 max-h-96 overflow-y-auto bg-gray-50 p-4 rounded-lg">
