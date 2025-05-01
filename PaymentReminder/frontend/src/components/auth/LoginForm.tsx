@@ -86,7 +86,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   };
   
   return (
-    <form id="login-form" onSubmit={handleSubmit} className="space-y-5">
+    <form
+      id="login-form"
+      onSubmit={handleSubmit}
+      className="space-y-5 animate-fadeIn transition-all duration-500 ease-in-out transform hover:scale-105"
+    >
       <LoginInput
         id="mobile"
         type="mobile"
@@ -127,12 +131,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         </a>
       </div>
       
-      <Button 
-        type="button" // Changed to "button" to avoid default form submission
-        variant="primary" 
-        fullWidth 
+      <Button
+        type="button"
+        variant="primary"
+        fullWidth
         loading={loading}
-        onClick={handleSubmit} // Added onClick handler
+        onClick={handleSubmit}
+        className="transition-transform duration-300 hover:scale-110 hover:shadow-lg"
       >
         Sign In
       </Button>
