@@ -46,6 +46,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
+    console.log(`Input changed: ${name} = ${type === 'checkbox' ? checked : value}`); // Debug log
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
@@ -69,6 +70,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       // Submit the form
       onSubmit(formData.email, formData.password, formData.remember);
       
+      // Reset loading state after 2 seconds if not redirected
       // Reset loading state after 2 seconds if not redirected
       setTimeout(() => {
         setLoading(false);
