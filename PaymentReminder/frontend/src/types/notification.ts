@@ -1,12 +1,19 @@
-export type NotificationStatus = 'SENT' | 'FAILED';
+export type NotificationStatus = 'Success' | 'Failed';
 
 export interface Notification {
-  id: string;
-  customerId: string;
-  phoneNumber: string;
-  messagePreview: string;
+  id: number;
+  customerId: number;
+  description: string;
   status: NotificationStatus;
-  timestamp: string;
+  paymentId: number;
+  successOn: string;
+  createdAt: string;
+  updatedAt: string | null;
+}
+
+export interface NotificationResponse {
+  notification: Notification;
+  mobile: string;
 }
 
 export interface NotificationStats {
