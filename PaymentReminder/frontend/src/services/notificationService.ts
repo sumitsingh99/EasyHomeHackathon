@@ -16,7 +16,7 @@ export const getNotifications = async () => {
 
 export const getMessages = async (notificationId: string) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/${notificationId}/messages`);
+    const response = await axios.get(`${API_BASE_URL}/${notificationId}/getMessages`);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
