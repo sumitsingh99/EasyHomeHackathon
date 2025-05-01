@@ -26,7 +26,7 @@ export const useNotifications = () => {
       setIsLoading(true);
       setError(null);
       
-      const data = await fetchNotifications();
+      const data = await getNotifications();
       setNotifications(data);
       
       // Calculate stats
