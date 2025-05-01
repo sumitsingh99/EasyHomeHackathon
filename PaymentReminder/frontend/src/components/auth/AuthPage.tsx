@@ -24,9 +24,12 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess }) => {
       <div className="relative w-full max-w-4xl">
         {/* Background design elements */}
         <div className="absolute -top-10 -left-10 w-40 h-40 bg-red-500 rounded-full opacity-10 animate-pulse"></div>
-        <div className="absolute -bottom-10 -right-10 w-60 h-60 bg-red-600 rounded-full opacity-10 animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div
+          className="absolute -bottom-10 -right-10 w-60 h-60 bg-red-600 rounded-full opacity-10 animate-pulse"
+          style={{ animationDelay: '1s' }}
+        ></div>
         
-        <div className="relative flex flex-col md:flex-row">
+        <div className="relative flex flex-col md:flex-row transition-all duration-500 ease-in-out transform hover:scale-105">
           {/* Left panel - Branding */}
           <div className="hidden md:flex flex-col justify-center p-12 bg-gradient-to-br from-red-600 to-red-700 text-white rounded-l-2xl w-2/5">
             <div className="animate-fadeIn">
