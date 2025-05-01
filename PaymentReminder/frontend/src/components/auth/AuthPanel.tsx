@@ -48,7 +48,7 @@ const AuthPanel: React.FC<AuthPanelProps> = ({ onSubmit }) => {
   return (
     <div 
       id="auth-panel"
-      className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-500 ease-in-out"
+      className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden transition-transform duration-500 ease-in-out transform hover:scale-105"
     >
       {/* Header */}
       <div className="relative">
@@ -91,7 +91,7 @@ const AuthPanel: React.FC<AuthPanelProps> = ({ onSubmit }) => {
             {isLogin ? "Don't have an account?" : "Already have an account?"}
             <button 
               onClick={toggleAuthMode}
-              className="ml-1 text-red-600 font-medium hover:text-red-800 transition-colors duration-200"
+              className="ml-1 text-red-600 font-medium hover:text-red-800 transition-transform duration-300 hover:scale-110"
             >
               {isLogin ? 'Sign up' : 'Sign in'}
             </button>
