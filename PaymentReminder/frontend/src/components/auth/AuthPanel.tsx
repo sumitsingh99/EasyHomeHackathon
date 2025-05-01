@@ -4,41 +4,15 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 
 interface AuthPanelProps {
-  onAuthenticated?: (user: { email: string }) => void;
+  onSubmit: (email: string, password: string) => void;
 }
 
-const AuthPanel: React.FC<AuthPanelProps> = ({ onAuthenticated }) => {
+const AuthPanel: React.FC<AuthPanelProps> = ({ onSubmit }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [notification, setNotification] = useState<{
     type: 'success' | 'error';
     message: string;
   } | null>(null);
-
-  const handleLogin = (email: string, password: string, remember: boolean) => {
-    setTimeout(() => {
-      if (email === 'user@example.com' && password === 'password') {
-        setNotification({
-          type: 'success',
-          message: 'Login successful! Redirecting...'
-        });
-        
-        if (onAuthenticated) {
-          setTimeout(() => {
-            onAuthenticated({ email });
-          }, 1500);
-        }
-      } else {
-        setNotification({
-          type: 'error',
-          message: 'Invalid email or password'
-        });
-        
-        setTimeout(() => {
-          setNotification(null);
-        }, 3000);
-      }
-    }, 800);
-  };
 
   const handleRegister = (name: string, email: string, password: string) => {
     setTimeout(() => {
@@ -107,7 +81,7 @@ const AuthPanel: React.FC<AuthPanelProps> = ({ onAuthenticated }) => {
       
       <div className="p-8">
         {isLogin ? (
-          <LoginForm onSubmit={handleLogin} />
+          <LoginForm onSubmit={(email, password, remember) => onSubmit(email, password)} />
         ) : (
           <RegisterForm onSubmit={handleRegister} />
         )}
