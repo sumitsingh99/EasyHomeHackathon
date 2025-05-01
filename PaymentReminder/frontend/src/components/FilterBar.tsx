@@ -42,10 +42,10 @@ const FilterBar: React.FC<FilterBarProps> = ({
             <button
               key={status}
               onClick={() => onStatusFilterChange(status)}
-              className={`px-4 py-2 text-sm font-medium transition-all duration-200 ${
+              className={`px-4 py-2 text-sm font-medium transition-transform duration-200 ${
                 statusFilter === status
                   ? 'bg-blue-500 text-white shadow-inner transform scale-105'
-                  : 'bg-white text-gray-700 hover:bg-blue-50'
+                  : 'bg-white text-gray-700 hover:bg-blue-50 hover:scale-105'
               }`}
             >
               {status}
