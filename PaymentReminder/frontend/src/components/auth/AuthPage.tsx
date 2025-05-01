@@ -1,14 +1,22 @@
 import React from 'react';
 import AuthPanel from './AuthPanel';
+import { signin } from '../../services/authService'; // Import signin API
 import logo from '../../public/images/easy-home-logo.jpeg'; // Adjust the path as necessary
 
-const AuthPage: React.FC = () => {
-  const handleAuthenticated = (user: { email: string }) => {
-    console.log('User authenticated:', user);
-    // In a real app, you would:
-    // 1. Store authentication token in localStorage/cookies
-    // 2. Update global auth state
-    // 3. Redirect to dashboard or home page
+interface AuthPageProps {
+  onLoginSuccess: () => void;
+}
+
+const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess }) => {
+  const handleAuthenticated = async (email: string, password: string) => {
+    try {
+      const response = await signin({ email, password });
+      console.log('User authenticated:', response);
+      onLoginSuccess(); // Notify parent component of successful login
+    } catch (error) {
+      console.error('Login failed:', error);
+      alert(error); // Display error to the user
+    }
   };
 
   return (
@@ -53,7 +61,7 @@ const AuthPage: React.FC = () => {
           
           {/* Right panel - Auth form */}
           <div className="flex items-center justify-center w-full md:w-3/5">
-            <AuthPanel />
+            <AuthPanel onSubmit={handleAuthenticated} />
           </div>
         </div>
       </div>
