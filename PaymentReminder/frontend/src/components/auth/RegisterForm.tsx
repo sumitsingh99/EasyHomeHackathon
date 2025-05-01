@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import LoginInput from './LoginInput';
 import Button from './Button';
+import { signup } from '../../services/authService'; // Import signup API
 
 interface RegisterFormProps {
   onSubmit: (name: string, email: string, password: string) => void;
@@ -77,19 +78,22 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
     }
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (validateForm()) {
       setLoading(true);
       
-      // Submit the form
-      onSubmit(formData.name, formData.email, formData.password);
-      
-      // Reset loading state after 2 seconds
-      setTimeout(() => {
+      try {
+        const response = await signup(formData); // Call signup API
+        console.log('User registered:', response);
+        onSubmit(formData.name, formData.email, formData.password); // Notify parent component
+      } catch (error) {
+        console.error('Signup failed:', error);
+        alert(error); // Display error to the user
+      } finally {
         setLoading(false);
-      }, 2000);
+      }
     } else {
       // Apply subtle shake animation to the form
       const form = document.getElementById('register-form');
