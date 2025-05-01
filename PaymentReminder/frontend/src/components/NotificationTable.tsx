@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { formatDistanceToNow } from '../utils/formatters';
 import StatusBadge from './ui/StatusBadge';
-import InfoButton from './ui/InfoButton'; // Replace RetryButton with InfoButton
-import InfoModal from './ui/InfoModal'; // Replace RetryModal with InfoModal
-import { Notification } from '../types/notification';
+import InfoButton from './ui/InfoButton';
+import InfoModal from './ui/InfoModal';
+import { NotificationResponse } from '../types/notification';
 
 interface NotificationTableProps {
-  notifications: Notification[];
-  onRetry: (id: string) => Promise<void>;
+  notifications: NotificationResponse[];
+  onRetry: (id: number) => Promise<void>;
 }
 
 const NotificationTable: React.FC<NotificationTableProps> = ({ 
   notifications,
   onRetry
 }) => {
-  const [infoModalOpen, setInfoModalOpen] = useState(false); // Replace retryModalOpen with infoModalOpen
-  const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
+  const [infoModalOpen, setInfoModalOpen] = useState(false);
+  const [selectedNotification, setSelectedNotification] = useState<NotificationResponse | null>(null);
 
-  const handleInfoClick = (notification: Notification) => { // Replace handleRetryClick with handleInfoClick
+  const handleInfoClick = (notification: NotificationResponse) => {
     setSelectedNotification(notification);
     setInfoModalOpen(true);
   };
@@ -32,10 +32,10 @@ const NotificationTable: React.FC<NotificationTableProps> = ({
                 Customer ID
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Phone Number
+                Mobile
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Message Preview
+                Description
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Status
@@ -51,7 +51,7 @@ const NotificationTable: React.FC<NotificationTableProps> = ({
           <tbody className="divide-y divide-gray-200">
             {notifications.map((notification, index) => (
               <tr 
-                key={notification.id} 
+                key={notification.notification.id} 
                 className="table-row-hover"
                 style={{ 
                   animationDelay: `${index * 0.1}s`,
@@ -60,27 +60,27 @@ const NotificationTable: React.FC<NotificationTableProps> = ({
                 }}
               >
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">{notification.customerId}</div>
+                  <div className="text-sm font-medium text-gray-900">{notification.notification.customerId}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-500">{notification.phoneNumber}</div>
+                  <div className="text-sm text-gray-500">{notification.mobile}</div>
                 </td>
                 <td className="px-6 py-4">
                   <div className="text-sm text-gray-500 truncate max-w-xs">
-                    {notification.messagePreview}
+                    {notification.notification.description}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <StatusBadge status={notification.status} />
+                  <StatusBadge status={notification.notification.status} />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-500">
-                    {formatDistanceToNow(notification.timestamp)}
+                    {formatDistanceToNow(notification.notification.successOn)}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <InfoButton 
-                    onInfo={() => handleInfoClick(notification)} // Replace RetryButton with InfoButton
+                    onInfo={() => handleInfoClick(notification)}
                   />
                 </td>
               </tr>
@@ -90,14 +90,10 @@ const NotificationTable: React.FC<NotificationTableProps> = ({
       </div>
 
       {selectedNotification && (
-        <InfoModal // Replace RetryModal with InfoModal
-          isOpen={infoModalOpen} // Replace retryModalOpen with infoModalOpen
-          customerId={selectedNotification.customerId}
-          phoneNumber={selectedNotification.phoneNumber}
-          messagePreview={selectedNotification.messagePreview} // Add messagePreview to modal
-          status={selectedNotification.status} // Add status to modal
-          timestamp={selectedNotification.timestamp} // Add timestamp to modal
-          onClose={() => setInfoModalOpen(false)} // Replace onCancel with onClose
+        <InfoModal
+          isOpen={infoModalOpen}
+          notificationId={selectedNotification.notification.id}
+          onClose={() => setInfoModalOpen(false)}
         />
       )}
     </>

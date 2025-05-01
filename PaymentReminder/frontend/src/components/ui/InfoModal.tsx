@@ -14,7 +14,7 @@ const InfoModal: React.FC<InfoModalProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [messages, setMessages] = useState<string[]>([]); // State to store fetched messages
+  const [messages, setMessages] = useState<{ messageFrom: string; messageText: string }[]>([]); // Adjusted state type
   const [error, setError] = useState<string | null>(null); // State to handle errors
 
   useEffect(() => {
@@ -26,7 +26,13 @@ const InfoModal: React.FC<InfoModalProps> = ({
       const fetchMessages = async () => {
         try {
           const fetchedMessages = await getMessages(notificationId);
-          setMessages(fetchedMessages);
+          console.log('Fetched messages:', fetchedMessages);
+          setMessages(
+            fetchedMessages.data.map((msg: any) => ({
+              messageFrom: msg.messageFrom,
+              messageText: msg.messageText,
+            }))
+          ); // Extract relevant fields
           setError(null);
         } catch (err) {
           setError('Failed to load messages');
@@ -63,12 +69,12 @@ const InfoModal: React.FC<InfoModalProps> = ({
               <div
                 key={index}
                 className={`${
-                  index % 2 === 0
+                  message.messageFrom !== 'BOT'
                     ? 'self-start bg-gray-200 text-gray-800'
                     : 'self-end bg-blue-600 text-white'
                 } px-4 py-2 rounded-2xl max-w-xs shadow`}
               >
-                <p>{message}</p>
+                <p>{message.messageText}</p>
               </div>
             ))
           )}

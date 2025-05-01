@@ -8,11 +8,11 @@ interface StatusBadgeProps {
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   const baseClasses = "px-2 py-1 rounded-full text-xs font-medium inline-flex items-center";
   
-  if (status === 'SENT') {
+  if (status === 'Success') {
     return (
       <span className={`${baseClasses} bg-green-100 text-green-800`}>
         <span className="w-2 h-2 bg-green-500 rounded-full mr-1.5"></span>
-        SENT
+        SUCCESS
       </span>
     );
   } else {

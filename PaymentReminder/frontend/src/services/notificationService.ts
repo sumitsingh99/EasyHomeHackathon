@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api/v1/dashboard/notifications';
+const API_BASE_URL = 'http://localhost:9000/api/v1/dashboard';
 
 export const getNotifications = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}`);
+    const response = await axios.get(`${API_BASE_URL}/notifications`);
     // Extracting the relevant data from the response
     return response.data.data.content.map((item: any) => ({
       notification: item.notification,
@@ -20,7 +20,7 @@ export const getNotifications = async () => {
 
 export const getMessages = async (notificationId: string) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/${notificationId}/getMessages`);
+    const response = await axios.get(`${API_BASE_URL}/getMessages?notificationId=${notificationId}`);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

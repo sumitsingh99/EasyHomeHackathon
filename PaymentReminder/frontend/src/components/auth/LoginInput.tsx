@@ -42,13 +42,11 @@ const LoginInput: React.FC<LoginInputProps> = ({
   }, [error]);
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    console.log(`Input focused: ${id}`); // Debug log
     setFocused(true);
     if (onFocus) onFocus();
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    console.log(`Input blurred: ${id}`); // Debug log
     setFocused(false);
     if (onBlur) onBlur();
   };

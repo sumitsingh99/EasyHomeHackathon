@@ -38,7 +38,7 @@ const FilterBar: React.FC<FilterBarProps> = ({
         </div>
         
         <div className="flex rounded-lg overflow-hidden shadow-sm">
-          {['All', 'SENT', 'FAILED'].map((status) => (
+          {['All', 'Success', 'Failed'].map((status) => (
             <button
               key={status}
               onClick={() => onStatusFilterChange(status)}

@@ -8,9 +8,9 @@ interface AuthPageProps {
 }
 
 const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess }) => {
-  const handleAuthenticated = async (email: string, password: string) => {
+  const handleAuthenticated = async (userName: string, password: string) => {
     try {
-      const response = await signin({ email, password });
+      const response = await signin({ userName, password });
       console.log('User authenticated:', response);
       onLoginSuccess(); // Notify parent component of successful login
     } catch (error) {

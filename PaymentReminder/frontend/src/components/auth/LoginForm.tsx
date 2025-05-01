@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LoginInput from './LoginInput';
-import Button from './Button';
+import Button from './Button'; // Adjust the import path as necessary
 
 interface LoginFormProps {
   onSubmit: (email: string, password: string, remember: boolean) => void;
@@ -8,13 +8,13 @@ interface LoginFormProps {
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
-    email: '',
+    mobile: '',
     password: '',
     remember: false
   });
   
   const [errors, setErrors] = useState<{
-    email?: string;
+    mobile?: string;
     password?: string;
   }>({});
   
@@ -27,9 +27,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     } = {};
     
     // Email validation
-    if (!formData.email) {
+    if (!formData.mobile) {
       newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    } else if (!/\S+@\S+\.\S+/.test(formData.mobile)) {
       newErrors.email = 'Email is invalid';
     }
     
@@ -46,7 +46,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    console.log(`Input changed: ${name} = ${type === 'checkbox' ? checked : value}`); // Debug log
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
@@ -67,10 +66,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     if (validateForm()) {
       setLoading(true);
       
-      // Submit the form
-      onSubmit(formData.email, formData.password, formData.remember);
-      
-      // Reset loading state after 2 seconds if not redirected
+      // Call the passed onSubmit function
+      onSubmit(formData.mobile, formData.password, formData.remember);
+
       // Reset loading state after 2 seconds if not redirected
       setTimeout(() => {
         setLoading(false);
@@ -90,13 +88,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   return (
     <form id="login-form" onSubmit={handleSubmit} className="space-y-5">
       <LoginInput
-        id="email"
-        type="email"
-        label="Email Address"
-        value={formData.email}
+        id="mobile"
+        type="mobile"
+        label="Mobile"
+        value={formData.mobile}
         onChange={handleChange}
-        error={errors.email}
-        autoComplete="email"
+        error={errors.mobile}
+        autoComplete="mobile"
       />
       
       <LoginInput
@@ -130,10 +128,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       </div>
       
       <Button 
-        type="submit" 
+        type="button" // Changed to "button" to avoid default form submission
         variant="primary" 
         fullWidth 
         loading={loading}
+        onClick={handleSubmit} // Added onClick handler
       >
         Sign In
       </Button>
